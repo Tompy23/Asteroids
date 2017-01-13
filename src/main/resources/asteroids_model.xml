@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util">
+
+    <bean id="fsmShipCreator" class="net.tompy.ast.component.FSMCreatorShipImpl" />    
+    <bean id="fsmEntityCreator" class="net.tompy.ast.component.FSMCreatorEntityObjectImpl" />    
+
+	<bean id="ship" class="net.tompy.ast.component.EntityShipImpl" scope="prototype" init-method="init">
+		<property name="fsmCreator" ref="fsmShipCreator" />
+	    <property name="stateFactory" ref="stateFactory" />
+		<property name="sprite" ref="shipSprite" />
+		<property name="x" value="${ship.start.x}" />
+		<property name="y" value="${ship.start.y}" />
+		<property name="maxShots" value="${ship.max.shots}" />
+		<property name="shotCellWidth" value="${ship.shot.cell.width}" />
+		<property name="shotCellHeight" value="${ship.shot.cell.height}" />
+		<property name="spriteChangeDuration" value="${ship.sprite.change.duration}" />
+		<property name="rotationVelocity" value="${ship.rotation.velocity}" />
+		<property name="powerFactor" value="${ship.power.factor}" />
+		<property name="powerMax" value="${ship.power.max}" />
+		<property name="velocityMax" value="${ship.velocity.max}" />
+		<property name="velocitySlowdown" value="${ship.velocity.slowdown}" />
+		<property name="frameWidth" value="${ship.frame.width}" />
+		<property name="frameHeight" value="${ship.frame.height}" />	
+	</bean>
+	
+ 	
+	<bean id="shipSprite" class="net.tompy.ggt.component.SpriteBasicImpl" init-method="init">
+		<property name="imageName" value="${sprite.ship.image.name}" />
+		<property name="columns" value="${sprite.ship.columns}" />
+		<property name="rows" value="${sprite.ship.rows}" />
+		<property name="imageHeight" value="${sprite.ship.image.height}" />
+		<property name="imageWidth" value="${sprite.ship.image.width}" />
+		<property name="cellHeight" value="${sprite.ship.cell.height}" />
+		<property name="cellWidth" value="${sprite.ship.cell.width}" />
+	</bean>
+
+	<bean id="shot" class="net.tompy.ast.component.EntityObjectImpl" scope="prototype" init-method="init">
+		<property name="fsmCreatorEntity" ref="fsmEntityCreator" />
+	    <property name="stateFactory" ref="stateFactory" />
+		<property name="sprite" ref="shotSprite" />
+		<property name="velocity" value="${shot.velocity}" />
+		<property name="initialState" value="${shot.state.initial}" />
+	</bean>
+	
+	<bean id="shotSprite" class="net.tompy.ggt.component.SpriteBasicImpl" init-method="init">
+		<property name="imageName" value="${sprite.shot.image.name}" />
+		<property name="columns" value="${sprite.shot.columns}" />
+		<property name="rows" value="${sprite.shot.rows}" />
+		<property name="imageHeight" value="${sprite.shot.image.height}" />
+		<property name="imageWidth" value="${sprite.shot.image.width}" />
+		<property name="cellHeight" value="${sprite.shot.cell.height}" />
+		<property name="cellWidth" value="${sprite.shot.cell.width}" />
+	</bean>
+	
+	<bean id="asteroidLarge" class="net.tompy.ast.component.EntityObjectImpl" scope="prototype" init-method="init">
+		<property name="fsmCreatorEntity" ref="fsmEntityCreator" />
+	    <property name="stateFactory" ref="stateFactory" />
+		<property name="sprite" ref="asteroidLargeSprite" />
+		<property name="velocity" value="${asteroid.large.velocity}" />
+		<property name="rotationVelocity" value="${asteroid.large.rotation.velocity}" />
+		<property name="initialState" value="${asteroid.large.state.initial}" />
+		<property name="nextObjectName" value="${asteroid.large.state.next.name}" />
+		<property name="points" value="${asteroid.large.points}" />
+	</bean>
+	
+	<bean id="asteroidLargeSprite" class="net.tompy.ggt.component.SpriteBasicImpl" init-method="init">
+		<property name="imageName" value="${sprite.asteroid.large.image.name}" />
+		<property name="columns" value="${sprite.asteroid.large.columns}" />
+		<property name="rows" value="${sprite.asteroid.large.rows}" />
+		<property name="imageHeight" value="${sprite.asteroid.large.image.height}" />
+		<property name="imageWidth" value="${sprite.asteroid.large.image.width}" />
+		<property name="cellHeight" value="${sprite.asteroid.large.cell.height}" />
+		<property name="cellWidth" value="${sprite.asteroid.large.cell.width}" />
+	</bean>
+
+	<bean id="asteroidMedium" class="net.tompy.ast.component.EntityObjectImpl" scope="prototype" init-method="init">
+		<property name="fsmCreatorEntity" ref="fsmEntityCreator" />
+	    <property name="stateFactory" ref="stateFactory" />
+		<property name="sprite" ref="asteroidMediumSprite" />
+		<property name="velocity" value="${asteroid.medium.velocity}" />
+		<property name="rotationVelocity" value="${asteroid.medium.rotation.velocity}" />
+		<property name="initialState" value="${asteroid.medium.state.initial}" />
+		<property name="nextObjectName" value="${asteroid.medium.state.next.name}" />
+		<property name="points" value="${asteroid.medium.points}" />
+	</bean>
+
+	<bean id="asteroidMediumSprite" class="net.tompy.ggt.component.SpriteBasicImpl" init-method="init">
+		<property name="imageName" value="${sprite.asteroid.medium.image.name}" />
+		<property name="columns" value="${sprite.asteroid.medium.columns}" />
+		<property name="rows" value="${sprite.asteroid.medium.rows}" />
+		<property name="imageHeight" value="${sprite.asteroid.medium.image.height}" />
+		<property name="imageWidth" value="${sprite.asteroid.medium.image.width}" />
+		<property name="cellHeight" value="${sprite.asteroid.medium.cell.height}" />
+		<property name="cellWidth" value="${sprite.asteroid.medium.cell.width}" />
+	</bean>
+
+	<bean id="asteroidSmall" class="net.tompy.ast.component.EntityObjectImpl" scope="prototype" init-method="init">
+		<property name="fsmCreatorEntity" ref="fsmEntityCreator" />
+	    <property name="stateFactory" ref="stateFactory" />
+		<property name="sprite" ref="asteroidSmallSprite" />
+		<property name="velocity" value="${asteroid.small.velocity}" />
+		<property name="rotationVelocity" value="${asteroid.small.rotation.velocity}" />
+		<property name="initialState" value="${asteroid.small.state.initial}" />
+		<property name="points" value="${asteroid.small.points}" />
+	</bean>
+
+	<bean id="asteroidSmallSprite" class="net.tompy.ggt.component.SpriteBasicImpl" init-method="init">
+		<property name="imageName" value="${sprite.asteroid.small.image.name}" />
+		<property name="columns" value="${sprite.asteroid.small.columns}" />
+		<property name="rows" value="${sprite.asteroid.small.rows}" />
+		<property name="imageHeight" value="${sprite.asteroid.small.image.height}" />
+		<property name="imageWidth" value="${sprite.asteroid.small.image.width}" />
+		<property name="cellHeight" value="${sprite.asteroid.small.cell.height}" />
+		<property name="cellWidth" value="${sprite.asteroid.small.cell.width}" />
+	</bean>
+
+</beans>

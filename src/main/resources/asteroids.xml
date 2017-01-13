@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util">
+
+ 	<import resource="gameAI_template.xml" />
+ 	<import resource="asteroids_gui.xml" />
+ 	<import resource="asteroids_model.xml" />
+
+    <bean id="asteroids" class="net.tompy.ast.game.AsteroidsImpl" init-method="init">
+        <property name="stateFactory" ref="stateFactory" />
+		<property name="gamePane" ref="playPanel" />
+		<property name="mainFrame" ref="mainFrame" />
+		<property name="factory" ref="entityFactory" />
+		<property name="entities" ref="entityList" />
+    </bean>
+    
+    <util:map id="asteroidsStates">
+        <!-- Game States -->
+        <entry key="gameInit">
+            <bean class="net.tompy.ast.game.StateAsteroidsInitializeImpl" >
+            </bean>
+        </entry>
+        <entry key="gameStart">
+            <bean class="net.tompy.ast.game.StateAsteroidsStartImpl" >
+ 		    </bean>
+        </entry>
+        <entry key="gamePlay">
+            <bean class="net.tompy.ast.game.StateAsteroidsPlayImpl" >
+            	<property name="updateDuration" value="${state.play.update.duration}" />
+            </bean>
+        </entry>
+        <entry key="gameIncrementLevel">
+        	<bean class="net.tompy.ast.game.StateAsteroidsIncrementLevelImpl" >
+        	</bean>
+        </entry>
+        <entry key="gameOver">
+        	<bean class="net.tompy.ast.game.StateAsteroidsGameOverImpl" >
+        	</bean>
+        </entry>
+        <entry key="gameReset">
+        	<bean class="net.tompy.ast.game.StateAsteroidsResetImpl" >
+            	<property name="gameResetDuration" value="${game.reset.duration}" />
+        	</bean>
+        </entry>
+        
+        <!-- Ship States -->
+        <entry key="shipPlay">
+        	<bean class="net.tompy.ast.component.StateShipPlayImpl" />
+        </entry>
+        <entry key="shipExplode">
+        	<bean class="net.tompy.ast.component.StateShipExplodeImpl" />
+        </entry>
+        
+        <!-- Shot States -->
+        <entry key="shotFire">
+        	<bean class="net.tompy.ast.component.StateShotFireImpl">
+        		<property name="game" ref="asteroids" />
+        	</bean>
+        </entry>
+        
+        <!-- Asteroid States -->
+        <entry key="asteroidPlay">
+        	<bean class="net.tompy.ast.component.StateAsteroidPlayImpl" >
+        		<property name="game" ref="asteroids" />
+       		</bean>
+        </entry>
+        <entry key="asteroidExplode">
+        	<bean class="net.tompy.ast.component.StateAsteroidExplodeImpl" >
+        		<property name="game" ref="asteroids" />        	
+        	</bean>
+        </entry>
+    </util:map>
+        
+    <bean id="entityFactory" class="net.tompy.ast.component.EntityFactory" />
+    
+    <bean id="entityList" class="net.tompy.ast.component.EntityList" />
+    
+    <!-- Property Placeholder Configurer -->
+    <bean id="placeholderConfig" class="net.tompy.common.ArgumentListPropertyConfigurer" />
+    
+</beans>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util">
+
+    <bean id="mainFrame" class="net.tompy.ast.gui.MainFrame">
+		<property name="gamePane" ref="playPanel" />    	
+		<property name="game" ref="asteroids" />
+ 	</bean>
+	
+	<bean id="playPanel" class="net.tompy.ast.gui.PlayPanel">
+		<property name="displayList" ref="${display.list}" />
+	</bean>
+	
+	<util:list id="displayListAll">
+		<ref bean="displayPlayer" />
+		<ref bean="displayGameStats" />
+	</util:list>
+	
+	<util:list id="displayMinimum">
+		<ref bean="displayPlayer" />
+	</util:list>
+	
+	<bean id="displayPlayer" class="net.tompy.ast.component.EntityDisplayPlayerImpl">
+		<property name="game" ref="asteroids" />
+	</bean>
+
+	<bean id="displayGameStats" class="net.tompy.ast.component.EntityDisplayGameStatsImpl">
+		<property name="game" ref="asteroids" />
+	</bean>
+</beans>
